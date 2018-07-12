@@ -1,5 +1,0 @@
-package myPackage
-
-class Guess {
-
-}
