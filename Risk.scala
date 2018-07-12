@@ -10,5 +10,9 @@ class Risk extends GuessWithCard with Card {
 
   }
 
+  override def isCardAffordable(point:Int):Boolean={
+    if(point>25 && point<50) true else false
+  }
+
 
 }

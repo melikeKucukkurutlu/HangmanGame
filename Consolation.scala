@@ -10,6 +10,6 @@ class Consolation extends GuessWithCard with Card {
   }
 
   override def isCardAffordable(point:Int):Boolean={
-    if(point>=20) true else false
+    if(point>=5) true else false
   }
 }

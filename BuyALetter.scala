@@ -12,6 +12,8 @@ class BuyALetter extends MoveWithoutLetter with Card  {
     }
   }
 
+
+
   override def isCardAffordable(point:Int):Boolean={
     if(point>=20) true else false
   }

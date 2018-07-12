@@ -15,6 +15,7 @@ class Word (w:String,catName:String){
       }
     }
     positions.toList
+
   }
 
   def setPositionsStatus(list: List[Int]): Unit ={
@@ -22,10 +23,19 @@ class Word (w:String,catName:String){
   }
 
   def isAllPositionsRevealed():Boolean={
-    for(i<-0 to visibility.length)
+    visibility.exists(_ != false)
+   /* for(i<-0 to visibility.length-1)
       if(visibility(i)==false)
         false
-    true
+    true*/
+  }
+
+  def showWord(): Unit ={
+    for(i <- 0 to word.length-1){
+      if(visibility(i)==false)
+        print("_ ")
+      else print(word(i))
+    }
   }
 
 

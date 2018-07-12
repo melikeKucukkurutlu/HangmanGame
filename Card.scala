@@ -18,4 +18,6 @@ trait Card {
   }
   def isCardAffordable(p:Int):Boolean
 
+  def reduceCardPoint(point:Int):Int={point-cost}
+
 }

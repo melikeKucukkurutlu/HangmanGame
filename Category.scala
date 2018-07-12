@@ -9,4 +9,7 @@ class Category extends MoveWithoutLetter with Card {
     availableCount-=1
     word.categoryName
   }
+  override def isCardAffordable(point:Int):Boolean={
+    if(point>=5) true else false
+  }
 }
