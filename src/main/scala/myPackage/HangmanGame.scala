@@ -1,5 +1,0 @@
-package myPackage
-
-object HangmanGame {
-
-}
