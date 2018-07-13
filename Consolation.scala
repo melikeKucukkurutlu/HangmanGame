@@ -12,4 +12,6 @@ class Consolation extends GuessWithCard with Card {
   override def isCardAffordable(point:Int):Boolean={
     if(point>=5) true else false
   }
+
+  override def useCard(word: Word): Unit = ???
 }

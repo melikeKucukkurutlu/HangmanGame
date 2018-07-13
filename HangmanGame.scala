@@ -6,20 +6,32 @@ object HangmanGame {
   var Point:Int=100
   val word:Word=new Word("tiger","animal")
 
-  val cards=ListBuffer[Card]()
-  val b:BuyALetter=new BuyALetter()
-  val r:Risk=new Risk
-  val c:Category=new Category
-  cards+=b
-  cards+=r
+  val cards=Map[String,Card]("buy a letter" -> new BuyALetter, "category" -> new Category, "discount" -> new Discount, "risk" -> new Risk, "consolation" -> new Consolation)
+
   val alphabet=new Alphabet
   do{
     word.showWord()
     print("Select a card:")
     val card=scala.io.StdIn.readLine()
-    card match {
-      case "buy a letter"=>if(b.isCardAffordable(Point) && b.isCardAvailable()){
-        Point=b.reduceCardPoint(Point)
+    if(cards.contains(card)) {
+      if (cards(card).isCardAffordable(Point) && cards(card).isCardAvailable()){
+        cards(card).useCard(word)
+        Point = cards(card).reduceCardPoint(Point)
+      }
+
+      card match {
+        case "discount" =>
+        case "risk" =>
+        case "consolation" =>
+        case _ =>
+
+      }
+     // Point = cards(card).reduceCardPoint(Point)
+      /*card match {
+        case "buy a letter" => if (cards(card).isCardAffordable(Point) && cards(card).isCardAvailable()) {
+
+          cards(card).useCard(word)
+          /*              Point=b.reduceCardPoint(Point)
         print("Select a position:")
 
         val specificPosition=scala.io.StdIn.readInt()
@@ -28,21 +40,30 @@ object HangmanGame {
             val specificPosition=scala.io.StdIn.readInt()
          }
          word.visibility(specificPosition)=true*/
-        b.makeAMove(word,specificPosition)
-      }
+        b.makeAMove(word,specificPosition)            */
+        }
 
-      case "category" => if(c.isCardAffordable(Point) && c.isCardAvailable()) {
-        Point=c.reduceCardPoint(Point)
-        println(c.makeAMove(word))
-      }
-      case _ =>
-        print("Select a letter:")
+        case "category" => if (cards(card).isCardAffordable(Point) && cards(card).isCardAvailable()) {
+          Point = cards(card).reduceCardPoint(Point)
+          println(cards(card).useCard(word))
+        }
+        case "discount" =>
+        case _ =>
+          print("Select a letter:")
           val newLetter = scala.io.StdIn.readChar()
-       // Point=reducePoint(alphabet.alphabet(newLetter).cost)
-        val g:Guess=new Guess()
-        g.makeAMove(alphabet.alphabet(newLetter),word)
+          // Point=reducePoint(alphabet.alphabet(newLetter).cost)
+          val g: Guess = new Guess()
+          g.makeAMove(alphabet.alphabet(newLetter), word)
 
 
+      }*/
+    }
+    else{
+      print("Select a letter:")
+      val newLetter = scala.io.StdIn.readChar()
+      // Point=reducePoint(alphabet.alphabet(newLetter).cost)
+      val g: Guess = new Guess()
+      g.makeAMove(alphabet.alphabet(newLetter), word)
     }
     println("Your point:"+Point)
   }while(Point>0 && word.isAllPositionsRevealed())
@@ -52,6 +73,10 @@ object HangmanGame {
     Point-=quantity
     Point
   }
+
+ /* def ReducePoint1(ints: Int*): Unit ={
+    ints.foreach(Point => Point-_)
+  }*/
 
   /*def main(args: Array[String]): Unit = {
     val guesses=List[Guess]()

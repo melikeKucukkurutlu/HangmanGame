@@ -14,5 +14,7 @@ class Risk extends GuessWithCard with Card {
     if(point>25 && point<50) true else false
   }
 
+  override def useCard(word: Word): Unit = ???
+
 
 }

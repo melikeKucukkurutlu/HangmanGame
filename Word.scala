@@ -17,6 +17,18 @@ class Word (w:String,catName:String){
     positions.toList
 
   }
+  def findLetterPosition1(l:Letter):List[Int]={
+    import scala.collection.mutable.ListBuffer
+    var positions = new ListBuffer[Int]()
+    var a:Int=(-1)
+    for(c <- word if c == l.letter) {
+      a=word.indexOf(c,(a+1))
+      positions+=a
+
+    }
+    positions.toList
+  }
+
 
   def setPositionsStatus(list: List[Int]): Unit ={
     list.foreach(l=>visibility(l)=true)

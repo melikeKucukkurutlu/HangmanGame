@@ -5,10 +5,12 @@ trait Card {
   val cost:Int
   var availableCount:Int
 
-  def decreaseAvailableCount():Int={
+ /* def decreaseAvailableCount():Int={
     availableCount-=1
     availableCount
-  }
+  }*/
+
+  val decrease=(x:Int) => x-1
  /* def isCardUsable(point:Int): Boolean ={
     if(isCardAvailable()==true && isCardAffordable(point)==true) true else false
   }*/
@@ -19,5 +21,9 @@ trait Card {
   def isCardAffordable(p:Int):Boolean
 
   def reduceCardPoint(point:Int):Int={point-cost}
+
+
+
+  def useCard(word:Word)
 
 }
