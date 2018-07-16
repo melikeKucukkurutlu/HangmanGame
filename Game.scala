@@ -9,29 +9,26 @@ object Game {
 
 
   val Point:Int=100
-
-
-
   val wordRepo=WordRepo
-
+def startAGame() {
   do {
-    val cards=Map[String,Card]("buy a letter" -> new BuyALetter(), "category" -> new Category, "discount" -> new Discount, "risk" -> new Risk, "consolation" -> new Consolation)
-    val level=getLevel()
+    val cards = Map[String, Card]("buy a letter" -> new BuyALetter(), "category" -> new Category, "discount" -> new Discount, "risk" -> new Risk, "consolation" -> new Consolation)
+    val level = getLevel()
     val word: Word = new Word(wordRepo.findWord(level), wordRepo.findWordCategory())
-    val alphabet=new Alphabet
+    val alphabet = new Alphabet
     //println(word.word)
     word.findSpace()
 
 
-    recursiveMove(0,word,alphabet,cards)
+    recursiveMove(0, word, alphabet, cards)
     println(word.word)
 
     println("Play again:(Y/N)")
 
 
-  }while(scala.io.StdIn.readChar()=='Y')
+  } while (scala.io.StdIn.readChar() == 'Y')
 
-
+}
   def recursiveMove(p:Int,word: Word,alphabet: Alphabet,cards:Map[String,Card]): Unit ={
     if(p<=Point && word.isAllPositionsRevealed()){
       word.showWord()
