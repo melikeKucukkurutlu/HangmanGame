@@ -1,5 +1,7 @@
 package Game
 
+import javafx.scene.effect.Light
+
 
 object Game {
   import scala.collection.immutable.Map
@@ -9,10 +11,9 @@ object Game {
 
   val Point:Int=100
 
-  val word1:Word=new Word("tigeer","animal")
+  val level=getLevel()
 
   val wordRepo:WordRepo=new WordRepo
-  val level=getLevel()
   val word:Word=new Word(wordRepo.findWord(level),wordRepo.findWordCategory())
 
   //println(word.word)
@@ -23,6 +24,57 @@ object Game {
     println(word.word)
 
 
+
+
+  def recursive(p:Int): Unit ={
+    if(p<=Point && word.isAllPositionsRevealed()){
+      word.showWord()
+
+      val newCard = checkCard(getCard(),Point-p)
+      if(newCard!=None)
+      {
+        newCard.get.name match {
+          case "Buy A Letter" => newCard.get.asInstanceOf[BuyALetter].useCard(word)
+            recursive(p+newCard.get.cost)
+          case "Category" =>newCard.get.asInstanceOf[Category].useCard(word)
+            recursive(p+newCard.get.cost)
+          case "Discount" =>
+            val newMove=newCard.get.asInstanceOf[Discount]
+            recursive(p + newMove.useCard(newMove.checkLetter(newMove.getLetter()).get,word) + newMove.cost)
+
+          case "Risk" =>
+            val newMove=newCard.get.asInstanceOf[Risk]
+            recursive(p + newMove.useCard(newMove.checkLetter(newMove.getLetter()).get,word) + newMove.cost)
+
+          case "Consolation" =>
+            val newMove=newCard.get.asInstanceOf[Consolation]
+            recursive(p + newMove.useCard(newMove.checkLetter(newMove.getLetter()).get,word,p) + newMove.cost)
+
+
+        }
+
+      }
+
+      else{
+        val move:Move=new Move{}
+        val newLetter=move.checkLetter(move.getLetter()).get
+        val letterResult=move.makeALetterGuess(newLetter,word)
+        if(letterResult==true){
+          println("Guess is true")
+          println("Your point:" + (Point - p))
+          recursive(p)
+        }
+        else {println("guess is false")
+          println("Your point:" + (Point - (p + newLetter.cost)))
+          recursive(p + newLetter.cost)
+        }
+
+      }
+    }
+    else if(!word.isAllPositionsRevealed())
+      println("you won")
+    else println("you lose")
+  }
 
 
   def getLevel():Int={
@@ -57,54 +109,4 @@ object Game {
     }
   }
 
-
-  def recursive(p:Int): Unit ={
-    if(p<=100 && word.isAllPositionsRevealed()){
-      word.showWord()
-
-      val newCard = checkCard(getCard(),100-p)
-      if(newCard!=None)
-      {
-        newCard.get.name match {
-          case "Buy A Letter" => newCard.get.asInstanceOf[BuyALetter].useCard(word)
-            recursive(p+newCard.get.cost)
-          case "Category" =>newCard.get.asInstanceOf[Category].useCard(word)
-            recursive(p+newCard.get.cost)
-          case "Discount" =>
-            val newMove=newCard.get.asInstanceOf[Discount]
-            recursive(p + newMove.useCard(newMove.checkLetter(newMove.getLetter()).get,word) + newMove.cost)
-
-          case "Risk" =>
-            val newMove=newCard.get.asInstanceOf[Risk]
-            recursive(p + newMove.useCard(newMove.checkLetter(newMove.getLetter()).get,word) + newMove.cost)
-
-          case "Consolation" =>
-            val newMove=newCard.get.asInstanceOf[Consolation]
-            recursive(p + newMove.useCard(newMove.checkLetter(newMove.getLetter()).get,word) + newMove.cost)
-
-
-        }
-
-      }
-
-      else{
-        val move:Move=new Move{}
-        val newLetter=move.checkLetter(move.getLetter()).get
-        val letterResult=move.makeALetterGuess(newLetter,word)
-        if(letterResult==true){
-          println("Guess is true")
-          println("Your point:" + (Point - p))
-          recursive(p)
-        }
-        else {println("guess is false")
-          println("Your point:" + (Point - (p + newLetter.cost)))
-          recursive(p + newLetter.cost)
-        }
-
-      }
-
-    }
-  }
-
 }
-

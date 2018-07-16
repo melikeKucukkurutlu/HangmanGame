@@ -12,7 +12,7 @@ class Discount extends Move with Card {
   def useCard(letter: Letter, word: Word): Int ={
     val letterResult=makeALetterGuess(letter,word)
     if(letterResult==false)
-      letter.cost*25/100
+      letter.cost*75/100
     else 0
   }
 

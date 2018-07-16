@@ -18,7 +18,4 @@ trait Card {
   def reduceCardPoint(point:Int):Int={point-cost}
 
 
-
- // def useCard(word:Word)
-
 }

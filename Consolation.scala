@@ -9,18 +9,45 @@ class Consolation extends Move with Card {
     if(point>=5) true else false
   }
 
-  def useCard(letter: Letter, word: Word): Int ={
+ /* def useCard(letter: Letter, word: Word, p:Int): Int ={
     val letterResult=makeALetterGuess(letter,word)
    // word.showWord()
     if(letterResult==false){
+      println("Guess is false")
+      println("Your point:" + (100 - p - letter.cost - cost))
       val l2=checkLetter(getLetter()).get
       val letterResult2=makeALetterGuess(l2,word)
       //word.showWord()
-      if(letterResult2==false)
-        l2.cost/2 + letter.cost
+      if(letterResult2==false) {
+        println("Your point:" + (100 - p - letter.cost - cost - l2.cost/2))
+        l2.cost / 2 + letter.cost
+      }
       else
         letter.cost
     }
     else 0
+  }*/
+
+  def useCard(letter: Letter, word: Word, p:Int): Int ={
+    val letterResult=makeALetterGuess(letter,word)
+    // word.showWord()
+    if(letterResult==false) {
+      println("Guess is false")
+      if (100 - p - letter.cost - cost >= 0) {
+        println("Your point:" + (100 - p - letter.cost - cost))
+        val l2 = checkLetter(getLetter()).get
+        val letterResult2 = makeALetterGuess(l2, word)
+        //word.showWord()
+        if (letterResult2 == false) {
+          println("Your point:" + (100 - p - letter.cost - cost - l2.cost / 2))
+          l2.cost / 2 + letter.cost
+        }
+        else
+          letter.cost
+      }
+      else letter.cost
+    }
+    else 0
   }
+
 }
