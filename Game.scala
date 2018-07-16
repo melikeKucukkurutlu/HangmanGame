@@ -18,11 +18,11 @@ object Game {
   //println(word.word)
   word.findSpace()
 
-  def main(args: Array[String]): Unit = {
+
     recursive(0)
     println(word.word)
 
-}
+
 
 
   def getLevel():Int={
