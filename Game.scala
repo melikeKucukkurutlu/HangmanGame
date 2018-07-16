@@ -31,7 +31,7 @@ object Game {
       word.showWord()
 
       val newCard = checkCard(getCard(),Point-p)
-      if(newCard!=None)
+      if(newCard.isDefined)
       {
         newCard.get.name match {
           case "Buy A Letter" => newCard.get.asInstanceOf[BuyALetter].useCard(word)
@@ -59,7 +59,7 @@ object Game {
         val move:Move=new Move{}
         val newLetter=move.checkLetter(move.getLetter()).get
         val letterResult=move.makeALetterGuess(newLetter,word)
-        if(letterResult==true){
+        if(letterResult){
           println("Guess is true")
           println("Your point:" + (Point - p))
           recursive(p)
@@ -97,14 +97,14 @@ object Game {
 
   def checkCard(c:Option[Card],p:Int):Option[Card]={
     c match {
-      case Some(_) =>{
+      case Some(_) =>
         if(c.get.isCardAffordable(p)&&c.get.isCardAvailable())
           c
         else {
           println("You can't use this card")
           checkCard(getCard(),p)
         }
-      }
+
       case None => None
     }
   }
