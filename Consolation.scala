@@ -28,14 +28,14 @@ class Consolation extends Move with Card {
     else 0
   }*/
 
-  def useCard(letter: Letter, word: Word, p:Int): Int ={
+  def useCard(letter: Letter, word: Word, p:Int, alphabet: Alphabet): Int ={
     val letterResult=makeALetterGuess(letter,word)
     // word.showWord()
     if(letterResult==false) {
       println("Guess is false")
       if (100 - p - letter.cost - cost >= 0) {
         println("Your point:" + (100 - p - letter.cost - cost))
-        val l2 = checkLetter(getLetter()).get
+        val l2 = checkLetter(getLetter(alphabet),alphabet).get
         val letterResult2 = makeALetterGuess(l2, word)
         //word.showWord()
         if (letterResult2 == false) {

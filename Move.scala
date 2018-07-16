@@ -1,6 +1,6 @@
 package Game
 
-import Game.alphabet1
+//import Game.alphabet1
 
 abstract class Move {
 
@@ -18,33 +18,31 @@ abstract class Move {
 
   }
 
-  def getLetter():Option[Letter]={
+  def getLetter(alphabet: Alphabet):Option[Letter]={
     try {
       print("Select a letter:")
       val newLetter = scala.io.StdIn.readChar()
-      alphabet1.alphabet get newLetter
+      alphabet.alphabet get newLetter
 
     }catch {
-      case e:StringIndexOutOfBoundsException =>getLetter()
+      case e:StringIndexOutOfBoundsException =>getLetter(alphabet)
     }
 
   }
 
-  def checkLetter(l:Option[Letter]):Option[Letter]={
+  def checkLetter(l:Option[Letter],alphabet: Alphabet):Option[Letter]={
     l match {
       case Some(_) => {
         if(l.get.isLetterUsable()==true) {
           l.get.setUsability()
           l
         }
-        else checkLetter(getLetter())
+        else checkLetter(getLetter(alphabet),alphabet)
       }
 
-      case None => checkLetter(getLetter())
+      case None => checkLetter(getLetter(alphabet),alphabet)
     }
 
   }
-
-
 
 }

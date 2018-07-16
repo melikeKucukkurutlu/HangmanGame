@@ -10,11 +10,11 @@ class Risk extends Move with Card {
     if(point>25 && point<50) true else false
   }
 
-  def useCard(letter: Letter, word: Word): Int ={
+  def useCard(letter: Letter, word: Word, alphabet: Alphabet): Int ={
     val letterResult=makeALetterGuess(letter,word)
     word.showWord()
     if(letterResult==true){
-      makeALetterGuess(checkLetter(getLetter()).get,word)
+      makeALetterGuess(checkLetter(getLetter(alphabet),alphabet).get,word)
       word.showWord()
       0
     }
