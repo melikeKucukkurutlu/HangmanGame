@@ -1,21 +1,16 @@
-package Game
+package GamePackage
 
-trait Card {
-  val name:String
-  val cost:Int
-  var availableCount:Int
+import scala.collection.mutable.ListBuffer
 
+abstract class Card {
+  val name: String
+  val cost: Int
+  val availableCount: Int
+  def isCardAffordable(p: Int): Boolean
 
-  val decrease=(x:Int) => x-1
-
-
-  def isCardAvailable():Boolean ={
-    if(availableCount>0) true else false
-
+  def isCardAvailable(usedCards:ListBuffer[Card]):Boolean={
+    if(usedCards.count( c => c.name == this.name)<this.availableCount)
+      true
+    else false
   }
-  def isCardAffordable(p:Int):Boolean
-
-  def reduceCardPoint(point:Int):Int={point-cost}
-
-
 }

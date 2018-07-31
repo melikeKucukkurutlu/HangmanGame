@@ -1,56 +1,26 @@
-package Game
+package GamePackage
+
+import java.io.File
 
 import scala.collection.mutable.ListBuffer
+import scala.io.Source
 
 object WordRepo {
-  import scala.io.Source
-  val easy=ListBuffer[String]()
-  val medium=ListBuffer[String]()
-  val hard=ListBuffer[String]()
+  val filesHere = new File(".").listFiles
+  val files = filesHere.filter(file => file.getName.endsWith(".txt"))
+
+  val allWords = Map[Int, ListBuffer[Word]](1 -> ListBuffer[Word](), 2 -> ListBuffer[Word](), 3 -> ListBuffer[Word]())
+  files.foreach(file =>
+    Source.fromFile(file.getName).getLines.foreach(line =>
+      if (line.length >= 10) allWords(1) += new Word(line, file.getName.dropRight(4))
+      else if (line.length >= 6) allWords(2) += new Word(line, file.getName.dropRight(4))
+      else allWords(3) += new Word(line, file.getName.dropRight(4))))
+
+  //allWords(1).foreach(word => println(word.category + "----" + word.name))
 
 
-    val filesHere = (new java.io.File(".")).listFiles
-
-  val files = for {file <- filesHere if file.getName.endsWith(".txt")}
-    yield file
-
- /* try {
-
-  } catch {
-    case e: NullPointerException => println("File couldn't be found")
-  }*/
-
-  val r = scala.util.Random.nextInt(files.length)
-
-
-  def findWord(level: Int): String = {
-
-    val bufferedSource = Source.fromFile(files(r).getName)
-    for (line <- bufferedSource.getLines) {
-      if (line.length >= 8)
-        easy += line
-      else if (line.length >= 5)
-        medium += line
-      else hard += line
-    }
-    bufferedSource.close
-    val r1 = scala.util.Random.nextInt(easy.length)
-    val r2 = scala.util.Random.nextInt(medium.length)
-    val r3 = scala.util.Random.nextInt(hard.length)
-
-    level match {
-      case 1 => easy(r1)
-      case 2 => medium(r2)
-      case 3 => hard(r3)
-    }
+  def getRandomWord(level: Int): Word = {
+    val random = scala.util.Random.nextInt(allWords(level).length)
+    allWords(level)(random)
   }
-
-
-  def findWordCategory(): String = {
-
-    val catName = files(r).getName.toString().dropRight(4)
-    catName
-  }
-
-
 }

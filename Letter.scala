@@ -1,9 +1,9 @@
-package Game
+package GamePackage
 
 class Letter(l:Char,c:Int) {
-  val letter:Char=l
-  val cost:Int=c
-  var usability:Boolean=true
+  val letter=l
+  val cost=c
+ /* var usability:Boolean=true
   private var state:Boolean=false
 
   def isLetterUsable():Boolean=usability
@@ -14,6 +14,6 @@ class Letter(l:Char,c:Int) {
 
   def setUsability()={
     usability=false
-  }
+  }*/
 
 }
