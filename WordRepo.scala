@@ -16,9 +16,6 @@ object WordRepo {
       else if (line.length >= 6) allWords(2) += new Word(line, file.getName.dropRight(4))
       else allWords(3) += new Word(line, file.getName.dropRight(4))))
 
-  //allWords(1).foreach(word => println(word.category + "----" + word.name))
-
-
   def getRandomWord(level: Int): Word = {
     val random = scala.util.Random.nextInt(allWords(level).length)
     allWords(level)(random)
