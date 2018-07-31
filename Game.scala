@@ -28,7 +28,7 @@ class Game(level: Int) {
                   case Discount() =>
                     createAMove(letter.get.cost * 25 / 100)
                   case Risk() =>
-                    createAMove(letter.get.cost) //moves += Move(letter, card, Some(false)) //moves.last -> son eleman //moves.count(m => m.card == ???) -> kart sayısı moves.filter moves.foreach falan kullanabilirsin
+                    createAMove(letter.get.cost)
                   case Consolation() =>
                     createAMove(letter.get.cost)
                 }
