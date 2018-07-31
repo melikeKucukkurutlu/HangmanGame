@@ -10,7 +10,7 @@ class Game(level: Int) {
   val usedCards = ListBuffer[Card]()
   val word: Word = WordRepo.getRandomWord(level)
 
-  println(word.name + "->" + word.category)
+  //println(word.name + "->" + word.category)
 
 
   def makeANewGuess(letter: Option[Letter], card: Option[Card]): Unit = {
